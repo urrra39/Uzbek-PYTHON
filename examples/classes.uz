@@ -1,0 +1,26 @@
+# Sinflar va meros (inheritance) namunasi.
+
+sinf Hayvon:
+    funksiya __init__(o'zi, ism):
+        o'zi.ism = ism
+
+    funksiya ovoz(o'zi):
+        qaytarsin "..."
+
+    funksiya tanishtir(o'zi):
+        yoz(o'zi.ism, "deydi:", o'zi.ovoz())
+
+
+sinf It(Hayvon):
+    funksiya ovoz(o'zi):
+        qaytarsin "Vov-vov!"
+
+
+sinf Mushuk(Hayvon):
+    funksiya ovoz(o'zi):
+        qaytarsin "Miyov!"
+
+
+hayvonlar = [It("Bobik"), Mushuk("Misha"), Hayvon("Begona")]
+uchun h ichida hayvonlar:
+    h.tanishtir()
