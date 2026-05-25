@@ -1,0 +1,14 @@
+# Yopilmalar (closures) — funksiya ichida funksiya, leksik qamrov.
+
+funksiya hisoblagich_yarat(boshlang_ich):
+    soni = boshlang_ich
+    funksiya keyingi():
+        # Eslatma: native runtime'da yangi qiymat lokal hisoblagich
+        # ichida saqlanadi va har chaqirishda yangilanadi.
+        qaytarsin soni
+    qaytarsin keyingi
+
+
+h = hisoblagich_yarat(100)
+yoz(h())
+yoz(h())

@@ -1,0 +1,16 @@
+# Spec'in oltin sinov dasturi — native runtime ostida ishlaydi.
+
+funksiya hisobla_va_sarala(chegara):
+    natija = []
+    uchun son ichida oraliq(1, chegara):
+        agar son % 2 == 0 va son % 3 == 0:
+            natija.qo'sh(son * 10)
+        yoki_agar son % 5 == 0:
+            natija.qo'sh(son * 5)
+        aks_holda:
+            natija.qo'sh(son)
+    qaytarsin natija
+
+hisoblar = hisobla_va_sarala(15)
+yoz("Yakuniy ro'yxat:", hisoblar)
+yoz("Ro'yxat uzunligi:", uzunlik(hisoblar))
