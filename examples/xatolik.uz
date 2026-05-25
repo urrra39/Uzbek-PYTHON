@@ -1,0 +1,13 @@
+# Xatolarni ushlash (try/except) namunasi.
+
+funksiya xavfsiz_bo'lish(a, b):
+    harakat_qil:
+        qaytarsin a / b
+    istisno ZeroDivisionError:
+        yoz("Ogohlantirish:", a, "ni nolga bo'lish mumkin emas")
+        qaytarsin Boʻsh
+
+
+yoz(xavfsiz_bo'lish(10, 2))     # 5.0
+yoz(xavfsiz_bo'lish(10, 0))     # ogohlantirish + Boʻsh
+yoz("Yakunladik!")
