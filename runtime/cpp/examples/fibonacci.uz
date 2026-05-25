@@ -1,0 +1,17 @@
+# Rekursiya va xotira-ko'mak (memoization) namunasi.
+
+xotira = {}
+
+funksiya fibonachchi(n):
+    agar n ichida xotira:
+        qaytarsin xotira[n]
+    agar n < 2:
+        qaytarsin n
+    natija = fibonachchi(n - 1) + fibonachchi(n - 2)
+    xotira[n] = natija
+    qaytarsin natija
+
+
+yoz("Fibonachchi qatori:")
+uchun i ichida oraliq(15):
+    yoz(i, "->", fibonachchi(i))

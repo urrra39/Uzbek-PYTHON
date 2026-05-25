@@ -1,0 +1,4 @@
+# Eng kichik dastur — yoz va kirit.
+
+yoz("Salom, Olam!")
+yoz("Bu Uzbek-PY native runtime — Python kerak emas.")

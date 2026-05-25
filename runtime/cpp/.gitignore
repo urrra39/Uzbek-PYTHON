@@ -1,0 +1,5 @@
+uzbek
+uzbek-clang
+*.o
+*.dSYM/
+build/
