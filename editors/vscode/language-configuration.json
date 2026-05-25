@@ -1,0 +1,49 @@
+{
+  "comments": {
+    "lineComment": "#"
+  },
+  "brackets": [
+    ["{", "}"],
+    ["[", "]"],
+    ["(", ")"]
+  ],
+  "autoClosingPairs": [
+    { "open": "{",   "close": "}" },
+    { "open": "[",   "close": "]" },
+    { "open": "(",   "close": ")" },
+    { "open": "\"",  "close": "\"", "notIn": ["string"] },
+    { "open": "'",   "close": "'",  "notIn": ["string", "comment"] },
+    { "open": "\"\"\"", "close": "\"\"\"", "notIn": ["string"] },
+    { "open": "'''", "close": "'''", "notIn": ["string", "comment"] }
+  ],
+  "autoCloseBefore": ";:.,=}])>` \n\t",
+  "surroundingPairs": [
+    ["{", "}"],
+    ["[", "]"],
+    ["(", ")"],
+    ["\"", "\""],
+    ["'", "'"]
+  ],
+  "folding": {
+    "offSide": true,
+    "markers": {
+      "start": "^\\s*#\\s*region\\b",
+      "end":   "^\\s*#\\s*endregion\\b"
+    }
+  },
+  "wordPattern": "(-?\\d*\\.\\d\\w*)|([^\\`\\~\\!\\@\\#\\%\\^\\&\\*\\(\\)\\-\\=\\+\\[\\{\\]\\}\\\\\\|\\;\\:\\\"\\,\\.\\<\\>\\/\\?\\s]+)",
+  "indentationRules": {
+    "increaseIndentPattern": "^\\s*(funksiya|sinf|agar|yoki_agar|aks_holda|uchun|toki|harakat_qil|istisno|oxir_oqibat|bilan)\\b.*:\\s*(#.*)?$",
+    "decreaseIndentPattern": "^\\s*(yoki_agar|aks_holda|istisno|oxir_oqibat)\\b.*:\\s*(#.*)?$"
+  },
+  "onEnterRules": [
+    {
+      "beforeText": "^\\s*(?:funksiya|sinf|agar|yoki_agar|aks_holda|uchun|toki|harakat_qil|istisno|oxir_oqibat|bilan).*?:\\s*(?:#.*)?$",
+      "action": { "indent": "indent" }
+    },
+    {
+      "beforeText": "^\\s*(?:qaytarsin|tanaffus|davom)\\b.*$",
+      "action": { "indent": "outdent" }
+    }
+  ]
+}

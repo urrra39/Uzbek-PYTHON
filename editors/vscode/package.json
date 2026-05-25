@@ -1,0 +1,186 @@
+{
+  "name": "uzbek-py",
+  "displayName": "Uzbek-PY (Uzbek-PYTHON)",
+  "description": "Pythonning o'zbekcha modern ukasi — full IDE support for .uz files: syntax highlighting, snippets and a one-click runner.",
+  "version": "1.0.0",
+  "publisher": "uzbek-py",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Other"
+  ],
+  "keywords": [
+    "uzbek",
+    "uzbek-py",
+    "uzbek-python",
+    "uz",
+    "language",
+    "compiler"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/urrra39/Uzbek-PYTHON.git",
+    "directory": "editors/vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/urrra39/Uzbek-PYTHON/issues"
+  },
+  "homepage": "https://github.com/urrra39/Uzbek-PYTHON#readme",
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onLanguage:uzbek-py",
+    "onCommand:uzbek-py.runFile",
+    "onCommand:uzbek-py.showCompiledPython"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "uzbek-py",
+        "aliases": [
+          "Uzbek-PY",
+          "Uzbek-PYTHON",
+          "uzbek-python",
+          "uz"
+        ],
+        "extensions": [
+          ".uz"
+        ],
+        "configuration": "./language-configuration.json",
+        "firstLine": "^#!/.*\\buzbek[-_]?py\\b"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "uzbek-py",
+        "scopeName": "source.uzbek-py",
+        "path": "./syntaxes/uzbek-py.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "uzbek-py",
+        "path": "./snippets/uzbek-py.code-snippets"
+      }
+    ],
+    "commands": [
+      {
+        "command": "uzbek-py.runFile",
+        "title": "Kodni Ishga Tushirish (Run Uzbek-PY Script)",
+        "category": "Uzbek-PYTHON",
+        "icon": "$(play)"
+      },
+      {
+        "command": "uzbek-py.showCompiledPython",
+        "title": "Tarjima Qilingan Python Kodini Ko'rsatish (Show Compiled Python)",
+        "category": "Uzbek-PYTHON",
+        "icon": "$(file-code)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "uzbek-py.runFile",
+          "when": "resourceLangId == uzbek-py"
+        },
+        {
+          "command": "uzbek-py.showCompiledPython",
+          "when": "resourceLangId == uzbek-py"
+        }
+      ],
+      "editor/title/run": [
+        {
+          "command": "uzbek-py.runFile",
+          "when": "resourceLangId == uzbek-py",
+          "group": "navigation@1"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "uzbek-py.runFile",
+          "when": "resourceLangId == uzbek-py",
+          "group": "navigation@1"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "uzbek-py.runFile",
+          "when": "resourceLangId == uzbek-py",
+          "group": "uzbek-py@1"
+        },
+        {
+          "command": "uzbek-py.showCompiledPython",
+          "when": "resourceLangId == uzbek-py",
+          "group": "uzbek-py@2"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "uzbek-py.runFile",
+          "when": "resourceExtname == .uz",
+          "group": "navigation@10"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "uzbek-py.runFile",
+        "key": "ctrl+f5",
+        "mac": "cmd+f5",
+        "when": "resourceLangId == uzbek-py && editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Uzbek-PY",
+      "properties": {
+        "uzbekPy.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "scope": "machine-overridable",
+          "description": "Path to the Python interpreter used to launch the Uzbek-PY engine. Examples: 'python', 'python3', '/usr/bin/python3.11', 'C:\\\\Python311\\\\python.exe'."
+        },
+        "uzbekPy.enginePath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "Absolute or workspace-relative path to engine.py. Leave empty to auto-discover by walking up from the current file and through every workspace folder."
+        },
+        "uzbekPy.saveBeforeRun": {
+          "type": "boolean",
+          "default": true,
+          "description": "Save the active .uz file (and optionally other dirty editors) before invoking the runner."
+        },
+        "uzbekPy.terminalName": {
+          "type": "string",
+          "default": "Uzbek-PY Runner",
+          "description": "Name of the integrated terminal panel reused for runs. A new terminal is created on first run and reused thereafter."
+        },
+        "uzbekPy.clearTerminalBeforeRun": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, the runner clears the integrated terminal before each run for a fresh slate."
+        },
+        "uzbekPy.runArgs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Extra arguments passed to engine.py after the file path. For example: ['--no-translate-errors']."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "echo 'No build step — pure JavaScript.'",
+    "package": "vsce package --no-yarn",
+    "publish": "vsce publish --no-yarn"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@vscode/vsce": "^2.32.0"
+  }
+}

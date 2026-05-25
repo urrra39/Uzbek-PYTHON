@@ -1,0 +1,87 @@
+{
+  "Function": {
+    "prefix": "funksiya",
+    "scope": "uzbek-py",
+    "description": "Funksiya e'loni",
+    "body": [
+      "funksiya ${1:nom}(${2:arglar}):",
+      "\t${3:qaytarsin Boʻsh}"
+    ]
+  },
+  "Class": {
+    "prefix": "sinf",
+    "scope": "uzbek-py",
+    "description": "Sinf e'loni (konstruktor bilan)",
+    "body": [
+      "sinf ${1:Nom}:",
+      "\tfunksiya __init__(o'zi${2:, arglar}):",
+      "\t\t${3:o'zi.qiymat = Boʻsh}"
+    ]
+  },
+  "If / elif / else": {
+    "prefix": "agar",
+    "scope": "uzbek-py",
+    "description": "Shartli blok",
+    "body": [
+      "agar ${1:shart}:",
+      "\t${2:pass}",
+      "yoki_agar ${3:boshqa_shart}:",
+      "\t${4:pass}",
+      "aks_holda:",
+      "\t${5:pass}"
+    ]
+  },
+  "For loop": {
+    "prefix": "uchun",
+    "scope": "uzbek-py",
+    "description": "Iteratsiya tsikli",
+    "body": [
+      "uchun ${1:element} ichida ${2:ketma_ketlik}:",
+      "\t${3:yoz(${1:element})}"
+    ]
+  },
+  "While loop": {
+    "prefix": "toki",
+    "scope": "uzbek-py",
+    "description": "Shartli tsikl",
+    "body": [
+      "toki ${1:shart}:",
+      "\t${2:pass}"
+    ]
+  },
+  "Try / except": {
+    "prefix": "harakat_qil",
+    "scope": "uzbek-py",
+    "description": "Istisnoni ushlash",
+    "body": [
+      "harakat_qil:",
+      "\t${1:pass}",
+      "istisno ${2:Istisno} sifatida ${3:xato}:",
+      "\tyoz('Xatolik:', ${3:xato})"
+    ]
+  },
+  "Print": {
+    "prefix": "yoz",
+    "scope": "uzbek-py",
+    "description": "Konsolga chiqarish",
+    "body": [ "yoz(${1:qiymat})" ]
+  },
+  "Range loop": {
+    "prefix": "oraliq",
+    "scope": "uzbek-py",
+    "description": "Sonlar oraligʻi boʻyicha tsikl",
+    "body": [
+      "uchun ${1:i} ichida oraliq(${2:0}, ${3:10}):",
+      "\t${4:yoz(${1:i})}"
+    ]
+  },
+  "Main guard": {
+    "prefix": "asosiy",
+    "scope": "uzbek-py",
+    "description": "if __name__ == '__main__'",
+    "body": [
+      "agar __name__ == \"__main__\":",
+      "\t${1:asosiy()}"
+    ]
+  }
+}

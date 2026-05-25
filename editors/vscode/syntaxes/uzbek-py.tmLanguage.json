@@ -1,0 +1,402 @@
+{
+  "name": "Uzbek-PY",
+  "scopeName": "source.uzbek-py",
+  "fileTypes": ["uz"],
+  "patterns": [
+    { "include": "#statement" }
+  ],
+  "repository": {
+    "_comment_about_identifier_chars": {
+      "comment": "Uzbek identifiers may contain U+02BB (ʻ) — Yolgʻon, Boʻsh — and an ASCII apostrophe followed by a letter — qo'sh, o'zi, xavfsiz_bo'lish. The character class [A-Za-z0-9_\\u02BB'] is used as the identifier-continuation set throughout this grammar. Word boundaries are expressed with explicit lookbehind/lookahead because '\\b' is unreliable around U+02BB and the ASCII apostrophe."
+    },
+
+    "statement": {
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#decorator" },
+        { "include": "#import" },
+        { "include": "#class-definition" },
+        { "include": "#function-definition" },
+        { "include": "#expression" }
+      ]
+    },
+
+    "expression": {
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#strings" },
+        { "include": "#numbers" },
+        { "include": "#keywords-control" },
+        { "include": "#keywords-other" },
+        { "include": "#constants" },
+        { "include": "#self-parameter" },
+        { "include": "#builtins-functions" },
+        { "include": "#builtin-method-calls" },
+        { "include": "#function-call" },
+        { "include": "#operators" },
+        { "include": "#punctuation" },
+        { "include": "#identifiers" }
+      ]
+    },
+
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.uzbek-py",
+          "begin": "(?:^|(?<=\\s))(#)",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.comment.uzbek-py" }
+          },
+          "end": "(?=$)",
+          "patterns": [
+            {
+              "match": "\\b(TODO|FIXME|XXX|HACK|NOTE|EHTIYOT|MUHIM|TO'G'RILANSIN)\\b",
+              "name": "keyword.other.todo.uzbek-py"
+            }
+          ]
+        }
+      ]
+    },
+
+    "decorator": {
+      "match": "^\\s*(@)\\s*([A-Za-z_][A-Za-z0-9_\\u02BB']*(?:\\.[A-Za-z_][A-Za-z0-9_\\u02BB']*)*)",
+      "captures": {
+        "1": { "name": "punctuation.decorator.uzbek-py" },
+        "2": { "name": "entity.name.function.decorator.uzbek-py" }
+      }
+    },
+
+    "import": {
+      "patterns": [
+        {
+          "match": "(?<![A-Za-z0-9_\\u02BB'])(yuklab_ol|dan)(?![A-Za-z0-9_\\u02BB'])",
+          "name": "keyword.control.import.uzbek-py"
+        },
+        {
+          "match": "(?<![A-Za-z0-9_\\u02BB'])(sifatida)(?![A-Za-z0-9_\\u02BB'])",
+          "name": "keyword.control.import.alias.uzbek-py"
+        }
+      ]
+    },
+
+    "function-definition": {
+      "begin": "(?<![A-Za-z0-9_\\u02BB'])(funksiya)\\s+([A-Za-z_][A-Za-z0-9_\\u02BB']*)",
+      "beginCaptures": {
+        "1": { "name": "storage.type.function.uzbek-py keyword.other.uzbek-py" },
+        "2": { "name": "entity.name.function.uzbek-py" }
+      },
+      "end": "(?=:|$)",
+      "patterns": [
+        { "include": "#parameters" }
+      ]
+    },
+
+    "class-definition": {
+      "begin": "(?<![A-Za-z0-9_\\u02BB'])(sinf)\\s+([A-Za-z_][A-Za-z0-9_\\u02BB']*)",
+      "beginCaptures": {
+        "1": { "name": "storage.type.class.uzbek-py keyword.other.uzbek-py" },
+        "2": { "name": "entity.name.type.class.uzbek-py" }
+      },
+      "end": "(?=:|$)",
+      "patterns": [
+        {
+          "begin": "\\(",
+          "beginCaptures": { "0": { "name": "punctuation.parenthesis.begin.uzbek-py" } },
+          "end": "\\)",
+          "endCaptures":   { "0": { "name": "punctuation.parenthesis.end.uzbek-py" } },
+          "patterns": [
+            {
+              "match": "[A-Za-z_][A-Za-z0-9_\\u02BB']*(?:\\.[A-Za-z_][A-Za-z0-9_\\u02BB']*)*",
+              "name": "entity.other.inherited-class.uzbek-py"
+            },
+            { "include": "#expression" }
+          ]
+        }
+      ]
+    },
+
+    "parameters": {
+      "begin": "\\(",
+      "beginCaptures": { "0": { "name": "punctuation.parenthesis.begin.uzbek-py" } },
+      "end": "\\)",
+      "endCaptures":   { "0": { "name": "punctuation.parenthesis.end.uzbek-py" } },
+      "patterns": [
+        {
+          "match": "(?<![A-Za-z0-9_\\u02BB'])(o'zi|self|cls)(?![A-Za-z0-9_\\u02BB'])",
+          "name": "variable.parameter.function.language.uzbek-py"
+        },
+        {
+          "match": "([A-Za-z_][A-Za-z0-9_\\u02BB']*)\\s*(?==)",
+          "captures": {
+            "1": { "name": "variable.parameter.function.uzbek-py" }
+          }
+        },
+        {
+          "match": "(\\*\\*|\\*)\\s*([A-Za-z_][A-Za-z0-9_\\u02BB']*)",
+          "captures": {
+            "1": { "name": "keyword.operator.unpacking.parameter.uzbek-py" },
+            "2": { "name": "variable.parameter.function.uzbek-py" }
+          }
+        },
+        {
+          "match": "([A-Za-z_][A-Za-z0-9_\\u02BB']*)\\s*(:)",
+          "captures": {
+            "1": { "name": "variable.parameter.function.uzbek-py" },
+            "2": { "name": "punctuation.separator.annotation.uzbek-py" }
+          }
+        },
+        {
+          "match": "[A-Za-z_][A-Za-z0-9_\\u02BB']*",
+          "name": "variable.parameter.function.uzbek-py"
+        },
+        { "include": "#expression" }
+      ]
+    },
+
+    "self-parameter": {
+      "match": "(?<![A-Za-z0-9_\\u02BB'])(o'zi)(?![A-Za-z0-9_\\u02BB'])",
+      "name": "variable.language.special.self.uzbek-py"
+    },
+
+    "keywords-control": {
+      "patterns": [
+        {
+          "comment": "Conditionals, loops and exception handling.",
+          "match": "(?<![A-Za-z0-9_\\u02BB'])(agar|yoki_agar|aks_holda|uchun|toki|ichida|harakat_qil|istisno|oxir_oqibat|tasdiqla|tanaffus|davom|qaytarsin|berib_yubor|raise)(?![A-Za-z0-9_\\u02BB'])",
+          "name": "keyword.control.flow.uzbek-py"
+        }
+      ]
+    },
+
+    "keywords-other": {
+      "patterns": [
+        {
+          "comment": "Function/class declarations and storage modifiers.",
+          "match": "(?<![A-Za-z0-9_\\u02BB'])(funksiya|sinf|lambda_func|bilan|sifatida|global_e'lon|mahalliy|o'chir|uchun_passlash|is_xuddi)(?![A-Za-z0-9_\\u02BB'])",
+          "name": "keyword.other.uzbek-py"
+        },
+        {
+          "match": "(?<![A-Za-z0-9_\\u02BB'])(va|yoki|emas)(?![A-Za-z0-9_\\u02BB'])",
+          "name": "keyword.operator.logical.uzbek-py"
+        }
+      ]
+    },
+
+    "constants": {
+      "patterns": [
+        {
+          "match": "(?<![A-Za-z0-9_\\u02BB'])(Rost|Yolg\\u02BBon|Bo\\u02BBsh)(?![A-Za-z0-9_\\u02BB'])",
+          "name": "constant.language.uzbek-py"
+        }
+      ]
+    },
+
+    "builtins-functions": {
+      "patterns": [
+        {
+          "comment": "Uzbek built-in function calls.",
+          "match": "(?<![A-Za-z0-9_\\u02BB'\\.])(yoz|kirit|uzunlik|oraliq)(?=\\s*\\()",
+          "name": "support.function.builtin.uzbek-py"
+        },
+        {
+          "comment": "Bare references to Uzbek built-ins (no call).",
+          "match": "(?<![A-Za-z0-9_\\u02BB'\\.])(yoz|kirit|uzunlik|oraliq)(?![A-Za-z0-9_\\u02BB'])",
+          "name": "support.function.builtin.uzbek-py"
+        }
+      ]
+    },
+
+    "builtin-method-calls": {
+      "patterns": [
+        {
+          "comment": "Built-in method names that ride on the dot — e.g. natija.qo'sh(x)",
+          "match": "(\\.)(qo'sh)(?=\\s*\\()",
+          "captures": {
+            "1": { "name": "punctuation.accessor.dot.uzbek-py" },
+            "2": { "name": "support.function.builtin.method.uzbek-py" }
+          }
+        }
+      ]
+    },
+
+    "function-call": {
+      "patterns": [
+        {
+          "comment": "Method call: foo.bar(...)",
+          "match": "(?<=\\.)([A-Za-z_][A-Za-z0-9_\\u02BB']*)(?=\\s*\\()",
+          "name": "entity.name.function.method.uzbek-py"
+        },
+        {
+          "comment": "Plain call: foo(...)",
+          "match": "(?<![A-Za-z0-9_\\u02BB'\\.])([A-Za-z_][A-Za-z0-9_\\u02BB']*)(?=\\s*\\()",
+          "name": "entity.name.function.call.uzbek-py"
+        }
+      ]
+    },
+
+    "strings": {
+      "patterns": [
+        { "include": "#string-triple-double" },
+        { "include": "#string-triple-single" },
+        { "include": "#string-double" },
+        { "include": "#string-single" }
+      ]
+    },
+
+    "string-triple-double": {
+      "name": "string.quoted.triple.double.uzbek-py",
+      "begin": "(?<![A-Za-z0-9_\\u02BB])(?:[fFrRbBuU]|[fF][rR]|[rR][fF]|[bB][rR]|[rR][bB])?\"\"\"",
+      "end": "\"\"\"",
+      "patterns": [
+        { "include": "#string-escapes" },
+        { "include": "#fstring-interpolation" }
+      ]
+    },
+
+    "string-triple-single": {
+      "name": "string.quoted.triple.single.uzbek-py",
+      "begin": "(?<![A-Za-z0-9_\\u02BB])(?:[fFrRbBuU]|[fF][rR]|[rR][fF]|[bB][rR]|[rR][bB])?'''",
+      "end": "'''",
+      "patterns": [
+        { "include": "#string-escapes" },
+        { "include": "#fstring-interpolation" }
+      ]
+    },
+
+    "string-double": {
+      "name": "string.quoted.double.uzbek-py",
+      "begin": "(?<![A-Za-z0-9_\\u02BB])(?:[fFrRbBuU]|[fF][rR]|[rR][fF]|[bB][rR]|[rR][bB])?\"",
+      "end": "\"|(?<!\\\\)(?=$)",
+      "patterns": [
+        { "include": "#string-escapes" },
+        { "include": "#fstring-interpolation" }
+      ]
+    },
+
+    "string-single": {
+      "comment": "An ASCII single-quote starts a string ONLY when not preceded by an identifier character — that protects qo'sh, o'zi etc. from being mis-detected.",
+      "name": "string.quoted.single.uzbek-py",
+      "begin": "(?<![A-Za-z0-9_\\u02BB])(?:[fFrRbBuU]|[fF][rR]|[rR][fF]|[bB][rR]|[rR][bB])?'",
+      "end": "'|(?<!\\\\)(?=$)",
+      "patterns": [
+        { "include": "#string-escapes" },
+        { "include": "#fstring-interpolation" }
+      ]
+    },
+
+    "string-escapes": {
+      "patterns": [
+        {
+          "match": "\\\\(?:x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8}|N\\{[^}]+\\}|[0-7]{1,3}|[\\\\\"'abfnrtv0])",
+          "name": "constant.character.escape.uzbek-py"
+        },
+        {
+          "match": "\\\\.",
+          "name": "constant.character.escape.unrecognised.uzbek-py"
+        }
+      ]
+    },
+
+    "fstring-interpolation": {
+      "begin": "\\{(?!\\{)",
+      "beginCaptures": { "0": { "name": "punctuation.section.embedded.begin.uzbek-py" } },
+      "end": "\\}",
+      "endCaptures":   { "0": { "name": "punctuation.section.embedded.end.uzbek-py" } },
+      "name": "meta.embedded.uzbek-py",
+      "patterns": [
+        {
+          "match": "(:)([^}]*)",
+          "captures": {
+            "1": { "name": "punctuation.separator.format-spec.uzbek-py" },
+            "2": { "name": "constant.other.format-spec.uzbek-py" }
+          }
+        },
+        { "include": "#expression" }
+      ]
+    },
+
+    "numbers": {
+      "patterns": [
+        {
+          "comment": "Hex, oct, bin literals (with optional digit-grouping underscores).",
+          "match": "(?<![A-Za-z0-9_\\u02BB'])0[xX][0-9A-Fa-f](?:[0-9A-Fa-f_]*[0-9A-Fa-f])?[jJ]?(?![A-Za-z0-9_\\u02BB'])",
+          "name": "constant.numeric.integer.hexadecimal.uzbek-py"
+        },
+        {
+          "match": "(?<![A-Za-z0-9_\\u02BB'])0[oO][0-7](?:[0-7_]*[0-7])?[jJ]?(?![A-Za-z0-9_\\u02BB'])",
+          "name": "constant.numeric.integer.octal.uzbek-py"
+        },
+        {
+          "match": "(?<![A-Za-z0-9_\\u02BB'])0[bB][01](?:[01_]*[01])?[jJ]?(?![A-Za-z0-9_\\u02BB'])",
+          "name": "constant.numeric.integer.binary.uzbek-py"
+        },
+        {
+          "comment": "Floats with optional exponent.",
+          "match": "(?<![A-Za-z0-9_\\u02BB'])(?:\\d(?:[\\d_]*\\d)?\\.\\d(?:[\\d_]*\\d)?|\\.\\d(?:[\\d_]*\\d)?|\\d(?:[\\d_]*\\d)?\\.)(?:[eE][+-]?\\d(?:[\\d_]*\\d)?)?[jJ]?(?![A-Za-z0-9_\\u02BB'])",
+          "name": "constant.numeric.float.uzbek-py"
+        },
+        {
+          "comment": "Integer with exponent (still a float in Python).",
+          "match": "(?<![A-Za-z0-9_\\u02BB'])\\d(?:[\\d_]*\\d)?[eE][+-]?\\d(?:[\\d_]*\\d)?[jJ]?(?![A-Za-z0-9_\\u02BB'])",
+          "name": "constant.numeric.float.uzbek-py"
+        },
+        {
+          "comment": "Plain integer (and complex with j suffix).",
+          "match": "(?<![A-Za-z0-9_\\u02BB'])\\d(?:[\\d_]*\\d)?[jJ]?(?![A-Za-z0-9_\\u02BB'])",
+          "name": "constant.numeric.integer.uzbek-py"
+        }
+      ]
+    },
+
+    "operators": {
+      "patterns": [
+        {
+          "match": "->|:=",
+          "name": "keyword.operator.uzbek-py"
+        },
+        {
+          "match": "\\*\\*=|//=|>>=|<<=|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|@=|=",
+          "name": "keyword.operator.assignment.uzbek-py"
+        },
+        {
+          "match": "==|!=|<=|>=|<|>",
+          "name": "keyword.operator.comparison.uzbek-py"
+        },
+        {
+          "match": "\\*\\*|//|<<|>>|[+\\-*/%@&|^~]",
+          "name": "keyword.operator.arithmetic.uzbek-py"
+        }
+      ]
+    },
+
+    "punctuation": {
+      "patterns": [
+        { "match": "\\(", "name": "punctuation.parenthesis.begin.uzbek-py" },
+        { "match": "\\)", "name": "punctuation.parenthesis.end.uzbek-py" },
+        { "match": "\\[", "name": "punctuation.bracket.begin.uzbek-py" },
+        { "match": "\\]", "name": "punctuation.bracket.end.uzbek-py" },
+        { "match": "\\{", "name": "punctuation.brace.begin.uzbek-py" },
+        { "match": "\\}", "name": "punctuation.brace.end.uzbek-py" },
+        { "match": ",",   "name": "punctuation.separator.comma.uzbek-py" },
+        { "match": ":",   "name": "punctuation.separator.colon.uzbek-py" },
+        { "match": ";",   "name": "punctuation.separator.semicolon.uzbek-py" },
+        { "match": "\\.", "name": "punctuation.accessor.dot.uzbek-py" }
+      ]
+    },
+
+    "identifiers": {
+      "patterns": [
+        {
+          "comment": "Constants (ALL_CAPS by convention).",
+          "match": "(?<![A-Za-z0-9_\\u02BB'])([A-Z_][A-Z0-9_]*)(?![A-Za-z0-9_\\u02BB'])",
+          "name": "variable.other.constant.uzbek-py"
+        },
+        {
+          "comment": "Generic identifier (allows ASCII apostrophes mid-name and U+02BB).",
+          "match": "(?<![A-Za-z0-9_\\u02BB'])[A-Za-z_][A-Za-z0-9_\\u02BB']*",
+          "name": "variable.other.uzbek-py"
+        }
+      ]
+    }
+  }
+}
